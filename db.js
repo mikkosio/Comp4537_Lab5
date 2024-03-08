@@ -23,7 +23,7 @@ class SQLHandler {
             console.log(' Table created successfully (or already exists)');
         } catch (error) {
             console.error('Error creating table:', error);
-            return null;
+            return error.message;
         } finally {
             client.end();
         }
@@ -37,7 +37,7 @@ class SQLHandler {
             return result;
         } catch (error) {
             console.error('Error sending query:', error);
-            return null;
+            return error.message;
         } finally {
             client.end();
         }

@@ -22,11 +22,14 @@ function handleGet(req, res) {
                         'Content-Type': 'text/plain',
                         'Access-Control-Allow-Origin': '*'
                     });
-                    res.end('Error executing query');
+                    res.end(JSON.stringify(result));
                 }
             });
     } else {
-        res.writeHead(400, { 'Content-Type': 'text/plain' });
+        res.writeHead(400, {
+            'Content-Type': 'text/plain',
+            'Access-Control-Allow-Origin': '*'
+        });
         res.end('400 Bad Request');
     }
 }
@@ -50,7 +53,7 @@ function handlePost(req, res) {
                 'Content-Type': 'text/plain',
                 'Access-Control-Allow-Origin': '*'
             });
-            res.end('Error executing query');
+            res.end(JSON.stringify(result));
         }
     });
 }
