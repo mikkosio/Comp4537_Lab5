@@ -60,8 +60,8 @@ async function handleRequest(req, res) {
     } else if (req.method === "POST") {
         handlePost(req, res);
     } else {
-        res.writeHead(404, { 'Content-Type': 'text/plain' });
-        res.end('404 Not Found');
+        res.writeHead(200, { 'Content-Type': 'text/plain' });
+        res.end('Hello, World!');
     }
 }
 
