@@ -22,11 +22,11 @@ function reply(res, status, type, message) {
 }
 
 function handleGet(req, res) {
-    const url = url.parse(req.url, true);
+    const parsedUrl = url.parse(req.url, true);
     const pathname = url.pathname;
 
     if (pathname === '/query') {
-        const sqlQuery = url.query.sql;
+        const sqlQuery = parsedUrl.query.sql;
         if (sqlQuery) {
             console.log('Received query:', sqlQuery);
             sqlHandler.sendSQLQuery(sqlQuery)
@@ -51,8 +51,8 @@ function handlePost(req, res) {
         body += chunk.toString();
     });
 
-    const url = url.parse(req.url, true);
-    const pathname = url.pathname;
+    const parsedUrl = url.parse(req.url, true);
+    const pathname = parsedUrl.pathname;
 
     req.on('end', () => {
         if (pathname === '/insert') {
