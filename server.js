@@ -44,7 +44,11 @@ function handlePost(req, res) {
 }
 
 async function handleRequest(req, res) {
-    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.writeHead(200, {
+        'Content-Type': 'text/plain',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'GET, POST',
+    });
     if (req.method === "GET") {
         handleGet(req, res);
     } else if (req.method === "POST") {
