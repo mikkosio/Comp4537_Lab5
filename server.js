@@ -33,7 +33,7 @@ function handleGet(req, res) {
             sqlHandler.sendSQLQuery(sqlQuery)
                 .then(result => {
                     if (result) {
-                        const formattedRows = '';
+                        let formattedRows = '';
                         result.rows.forEach(row => {
                             formattedRows += `(id: ${row.id}, name: ${row.name}, dateOfBirth: ${row.dateOfBirth})\n`;
                         });
