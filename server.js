@@ -64,7 +64,10 @@ async function handleRequest(req, res) {
     } else if (req.method === "POST") {
         handlePost(req, res);
     } else {
-        res.writeHead(404, { 'Content-Type': 'text/plain' });
+        es.writeHead(404, {
+            'Content-Type': 'text/plain',
+            'Access-Control-Allow-Origin': '*'
+        });
         res.end('404 Not Found');
     }
 }
