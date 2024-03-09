@@ -37,7 +37,7 @@ class SQLHandler {
             return result;
         } catch (error) {
             console.error('Error sending query:', error);
-            return error.message;
+            return error;
         } finally {
             client.end();
         }
@@ -59,7 +59,7 @@ class SQLHandler {
             return result;
         } catch (error) {
             console.error('Error inserting data:', error);
-            return error.message;
+            return error;
         } finally {
             client.end();
         }

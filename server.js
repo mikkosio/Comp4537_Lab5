@@ -1,6 +1,7 @@
 const http = require('http');
 const url = require("url");
 const SQLHandler = require('./db');
+const { error } = require('console');
 const sqlHandler = new SQLHandler(process.env.POSTGRES_URL_CLIENT);
 
 // Written with help from ChatGPT 3.5 to debug CORS issues
@@ -34,6 +35,7 @@ function handleGet(req, res) {
                     if (result) {
                         reply(res, 200, 'application/json', JSON.stringify(result));
                     } else {
+                        console.log('Error:', error);
                         reply(res, 400, 'application/json', JSON.stringify(result));
                     }
                 });
@@ -63,6 +65,7 @@ function handlePost(req, res) {
                     if (result) {
                         reply(res, 201, 'application/json', JSON.stringify(result));
                     } else {
+                        console.log('Error:', error);
                         reply(res, 400, 'application/json', JSON.stringify(result));
                     }
                 });
@@ -74,6 +77,7 @@ function handlePost(req, res) {
                     if (result) {
                         reply(res, 201, 'application/json', JSON.stringify(result));
                     } else {
+                        console.log('Error:', error);
                         reply(res, 400, 'application/json', JSON.stringify(result));
                     }
                 });
