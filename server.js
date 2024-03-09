@@ -35,7 +35,7 @@ function handleGet(req, res) {
                     if (result) {
                         let formattedRows = '';
                         result.rows.forEach(row => {
-                            formattedRows += `<p>(id: ${row.id}, name: ${row.name}, dateofbirth: ${row.dateofbirth})</p><br>`;
+                            formattedRows += `<p>(id: ${row.id}, name: ${row.name}, dateofbirth: ${row.dateofbirth})</p>`;
                         });
                         reply(res, 200, 'text/html', formattedRows);
                     } else {
