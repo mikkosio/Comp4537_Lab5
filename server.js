@@ -35,9 +35,9 @@ function handleGet(req, res) {
                     if (result) {
                         let formattedRows = '';
                         result.rows.forEach(row => {
-                            formattedRows += `(id: ${row.id}, name: ${row.name}, dateOfBirth: ${row.dateOfBirth})\n`;
+                            formattedRows += `<p>(id: ${row.id}, name: ${row.name}, dateofbirth: ${row.dateOfBirth})</p><br>`;
                         });
-                        reply(res, 200, 'text/plain', formattedRows);
+                        reply(res, 200, 'text/html', formattedRows);
                     } else {
                         console.log('Error:', error);
                         reply(res, 400, 'text/plain', "Error selecting data. Please check syntax.");
