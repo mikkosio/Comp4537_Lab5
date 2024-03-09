@@ -51,8 +51,8 @@ class SQLHandler {
         try {
             client = await this.pool.connect();
             let query = 'INSERT INTO patients (name, dateOfBirth) VALUES ';
-            data.forEach(({patientName, dateOfBirth}) => {
-                query += `('${patientName}', '${dateOfBirth}'), `;
+            data.forEach(({name, dateOfBirth}) => {
+                query += `('${name}', '${dateOfBirth}'), `;
             });
             query = query.slice(0, -2);
             const result = await client.query(query);
