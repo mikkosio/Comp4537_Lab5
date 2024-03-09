@@ -33,11 +33,7 @@ function handleGet(req, res) {
             sqlHandler.sendSQLQuery(sqlQuery)
                 .then(result => {
                     if (result) {
-                        let formattedRows = '';
-                        result.rows.forEach(row => {
-                            formattedRows += `<p>(id: ${row.id}, name: ${row.name}, dateofbirth: ${row.dateofbirth})</p>`;
-                        });
-                        reply(res, 200, 'text/html', formattedRows);
+                        reply(res, 200, 'application/json', JSON.stringify(result.rows));
                     } else {
                         console.log('Error:', error);
                         reply(res, 400, 'text/plain', "Error selecting data. Please check syntax.");
