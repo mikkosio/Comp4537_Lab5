@@ -42,6 +42,28 @@ class SQLHandler {
             client.end();
         }
     }
+
+    async insertData(data) {
+        let client;
+        try {
+            client = await this.pool.connect();
+            let query = 'INSERT INTO patients (name, dateOfBirth) VALUES ';
+            data.forEach((patient, index) => {
+                query += `('${patient.name}', '${patient.dateOfBirth}')`;
+                if (index < data.length - 1) {
+                    query += ', ';
+                }
+            });
+            query += ';';
+            const result = await client.query(query);
+            return result;
+        } catch (error) {
+            console.error('Error inserting data:', error);
+            return error.message;
+        } finally {
+            client.end();
+        }
+    }
 }
 
 module.exports = SQLHandler;
