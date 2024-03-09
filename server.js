@@ -24,6 +24,7 @@ function reply(res, status, type, message) {
 function handleGet(req, res) {
     const parsedUrl = url.parse(req.url, true);
     const pathname = url.pathname;
+    console.log('Received GET request:', pathname);
 
     if (pathname === '/query') {
         const sqlQuery = parsedUrl.query.sql;
