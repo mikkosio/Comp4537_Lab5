@@ -12,15 +12,12 @@ function handleGet(req, res) {
         sqlHandler.sendSQLQuery(sqlQuery)
             .then(result => {
                 if (result) {
-                    res.writeHead(200, { 'Content-Type': 'text/plain' });
                     res.end(JSON.stringify(result));
                 } else {
-                    res.writeHead(400, { 'Content-Type': 'text/plain' });
                     res.end(JSON.stringify(result));
                 }
             });
     } else {
-        res.writeHead(400, { 'Content-Type': 'text/plain' });
         res.end('400 Bad Request');
     }
 }
@@ -34,10 +31,8 @@ function handlePost(req, res) {
         console.log('Received query:', query);
         const result = await sqlHandler.sendSQLQuery(query);
         if (result) {
-            res.writeHead(401, { 'Content-Type': 'text/plain' });
             res.end(JSON.stringify(result));
         } else {
-            res.writeHead(400, { 'Content-Type': 'text/plain' });
             res.end(JSON.stringify(result));
         }
     });
@@ -54,7 +49,6 @@ async function handleRequest(req, res) {
     } else if (req.method === "POST") {
         handlePost(req, res);
     } else {
-        res.writeHead(404, {'Content-Type': 'text/plain'});
         res.end('404 Not Found');
     }
 }
