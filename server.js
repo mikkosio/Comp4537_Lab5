@@ -33,10 +33,14 @@ function handleGet(req, res) {
             sqlHandler.sendSQLQuery(sqlQuery)
                 .then(result => {
                     if (result) {
-                        reply(res, 200, 'application/json', JSON.stringify(result));
+                        const formattedRows = '';
+                        result.rows.forEach(row => {
+                            formattedRows += `(id: ${row.id}, name: ${row.name}, dateOfBirth: ${row.dateOfBirth})\n`;
+                        });
+                        reply(res, 200, 'text/plain', formattedRows);
                     } else {
                         console.log('Error:', error);
-                        reply(res, 400, 'application/json', JSON.stringify(result));
+                        reply(res, 400, 'text/plain', "Error selecting data. Please check syntax.");
                     }
                 });
         } else {
@@ -63,10 +67,10 @@ function handlePost(req, res) {
             sqlHandler.insertData(data)
                 .then(result => {
                     if (result) {
-                        reply(res, 201, 'application/json', JSON.stringify(result));
+                        reply(res, 201, 'text/plain', "Successfully inserted data.");
                     } else {
                         console.log('Error:', error);
-                        reply(res, 400, 'application/json', JSON.stringify(result));
+                        reply(res, 400, 'text/plain', "Error inserting data. Please check syntax.");
                     }
                 });
         } else if (pathname === '/query') {
@@ -75,10 +79,10 @@ function handlePost(req, res) {
             sqlHandler.sendSQLQuery(query)
                 .then(result => {
                     if (result) {
-                        reply(res, 201, 'application/json', JSON.stringify(result));
+                        reply(res, 201, 'text/plain', "Successfully inserted data.");
                     } else {
                         console.log('Error:', error);
-                        reply(res, 400, 'application/json', JSON.stringify(result));
+                        reply(res, 400, 'text/plain', "Error inserting data. Please check syntax.");
                     }
                 });
         } else {
