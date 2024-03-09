@@ -56,12 +56,12 @@ function handlePost(req, res) {
 
     req.on('end', () => {
         if (pathname === '/insert') {
-            console.log('Received data:', body);
             const data = JSON.parse(body);
+            console.log('Received data:', data);
             sqlHandler.insertData(data)
                 .then(result => {
                     if (result) {
-                        reply(res, 200, 'application/json', JSON.stringify(result));
+                        reply(res, 201, 'application/json', JSON.stringify(result));
                     } else {
                         reply(res, 400, 'application/json', JSON.stringify(result));
                     }
@@ -72,7 +72,7 @@ function handlePost(req, res) {
             sqlHandler.sendSQLQuery(query)
                 .then(result => {
                     if (result) {
-                        reply(res, 200, 'application/json', JSON.stringify(result));
+                        reply(res, 201, 'application/json', JSON.stringify(result));
                     } else {
                         reply(res, 400, 'application/json', JSON.stringify(result));
                     }
