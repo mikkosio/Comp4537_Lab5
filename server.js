@@ -14,12 +14,16 @@ function handleOptions(req, res) {
     res.end();
 }
 
-function reply(res, status, type, message) {
+function reply(res, status, message) {
     res.writeHead(status, {
-        'Content-Type': type,
+        'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*'
     });
-    res.end(message);
+    const reply = {
+        status: status,
+        message: message
+    }
+    res.end(JSON.stringify(reply));
 }
 
 function handleGet(req, res) {
@@ -33,17 +37,17 @@ function handleGet(req, res) {
             sqlHandler.sendSQLQuery(sqlQuery)
                 .then(result => {
                     if (result) {
-                        reply(res, 200, 'application/json', JSON.stringify(result.rows));
+                        reply(res, 200, result.rows);
                     } else {
                         console.log('Error:', error);
-                        reply(res, 400, 'text/plain', "Error selecting data. Please check syntax.");
+                        reply(res, 400, "Error selecting data. Please check syntax.");
                     }
                 });
         } else {
-            reply(res, 400, 'text/plain', '400 Bad Request');
+            reply(res, 400, '400 Bad Request');
         }
     } else {
-        reply(res, 404, 'text/plain', '404 Not Found');
+        reply(res, 404, '404 Not Found');
     }
 }
 
@@ -63,10 +67,10 @@ function handlePost(req, res) {
             sqlHandler.insertData(data)
                 .then(result => {
                     if (result) {
-                        reply(res, 201, 'text/plain', "Successfully inserted data.");
+                        reply(res, 201, "Successfully inserted data.");
                     } else {
                         console.log('Error:', error);
-                        reply(res, 400, 'text/plain', "Error inserting data. Please check syntax.");
+                        reply(res, 400, "Error inserting data. Please check syntax.");
                     }
                 });
         } else if (pathname === '/query') {
@@ -75,14 +79,14 @@ function handlePost(req, res) {
             sqlHandler.sendSQLQuery(query)
                 .then(result => {
                     if (result) {
-                        reply(res, 201, 'text/plain', "Successfully inserted data.");
+                        reply(res, 201, "Successfully inserted data.");
                     } else {
                         console.log('Error:', error);
-                        reply(res, 400, 'text/plain', "Error inserting data. Please check syntax.");
+                        reply(res, 400, "Error inserting data. Please check syntax.");
                     }
                 });
         } else {
-            reply(res, 404, 'text/plain', '404 Not Found');
+            reply(res, 404, '404 Not Found');
         }
     });
 }
