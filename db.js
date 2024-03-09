@@ -12,7 +12,10 @@ class SQLHandler {
     async #createTable() {
         let client;
         try {
-            client = await this.pool.connect();
+            let pool = new Pool({
+                connectionString: process.env.POSTGRES_URL
+            });
+            client = await pool.connect();
             await client.query(`
                 CREATE TABLE IF NOT EXISTS patients (
                     id SERIAL PRIMARY KEY, 
