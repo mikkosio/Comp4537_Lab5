@@ -2,6 +2,7 @@ const http = require('http');
 const url = require("url");
 const SQLHandler = require('./db');
 const { error } = require('console');
+const { error_messages } = require('./errors');
 const sqlHandler = new SQLHandler(process.env.POSTGRES_URL_CLIENT);
 
 // Written with help from ChatGPT 3.5 to debug CORS issues
@@ -40,7 +41,7 @@ function handleGet(req, res) {
                         reply(res, 200, result.rows);
                     } else {
                         console.log('Error:', error);
-                        reply(res, 400, "Error selecting data. Please check syntax.");
+                        reply(res, 400, error_messages[error.routine] || "Error executing query.");
                     }
                 });
         } else {
@@ -70,7 +71,7 @@ function handlePost(req, res) {
                         reply(res, 201, "Successfully inserted data.");
                     } else {
                         console.log('Error:', error);
-                        reply(res, 400, "Error inserting data. Please check syntax.");
+                        reply(res, 400, error_messages[error.routine] || "Error inserting data.");
                     }
                 });
         } else if (pathname === '/query') {
@@ -82,7 +83,7 @@ function handlePost(req, res) {
                         reply(res, 201, "Successfully inserted data.");
                     } else {
                         console.log('Error:', error);
-                        reply(res, 400, "Error inserting data. Please check syntax.");
+                        reply(res, 400, error_messages[error.routine] || "Error inserting data.");
                     }
                 });
         } else {
