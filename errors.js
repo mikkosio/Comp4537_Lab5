@@ -5,4 +5,4 @@ const error_messages = {
     'errorMissingColumn': 'Error: Field does not exist.',
 }
 
-export default error_messages;
+export { error_messages };
