@@ -37,11 +37,11 @@ function handleGet(req, res) {
             console.log('Received query:', sqlQuery);
             sqlHandler.sendSQLQuery(sqlQuery)
                 .then(result => {
-                    if (result) {
-                        reply(res, 200, result.rows);
+                    if (result.data) {
+                        reply(res, 200, result.data.rows);
                     } else {
                         console.log('Error:', error);
-                        reply(res, 400, error_messages[error.routine] || "Error executing query.");
+                        reply(res, 400, error_messages[result.error.routine] || "Error executing query.");
                     }
                 });
         } else {
@@ -67,11 +67,11 @@ function handlePost(req, res) {
             console.log('Received data:', data);
             sqlHandler.insertData(data)
                 .then(result => {
-                    if (result) {
+                    if (result.data) {
                         reply(res, 201, "Successfully inserted data.");
                     } else {
                         console.log('Error:', error);
-                        reply(res, 400, error_messages[error.routine] || "Error inserting data.");
+                        reply(res, 400, error_messages[result.error.routine] || "Error inserting data.");
                     }
                 });
         } else if (pathname === '/query') {
@@ -79,11 +79,11 @@ function handlePost(req, res) {
             console.log('Received query:', query);
             sqlHandler.sendSQLQuery(query)
                 .then(result => {
-                    if (result) {
+                    if (result.data) {
                         reply(res, 201, "Successfully inserted data.");
                     } else {
                         console.log('Error:', error);
-                        reply(res, 400, error_messages[error.routine] || "Error inserting data.");
+                        reply(res, 400, error_messages[result.error.routine] || "Error inserting data.");
                     }
                 });
         } else {

@@ -37,10 +37,10 @@ class SQLHandler {
         try {
             client = await this.pool.connect();
             const result = await client.query(query);
-            return result;
+            return {data: result, error: null};
         } catch (error) {
             console.error('Error sending query:', error);
-            return error;
+            return {data: null, error: error};
         } finally {
             client.end();
         }
@@ -56,10 +56,10 @@ class SQLHandler {
             });
             query = query.slice(0, -2);
             const result = await client.query(query);
-            return result;
+            return {data: result, error: null};
         } catch (error) {
             console.error('Error inserting data:', error);
-            return error;
+            return {data: null, error: error};
         } finally {
             client.end();
         }
