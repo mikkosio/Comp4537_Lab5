@@ -15,6 +15,14 @@ function handleOptions(req, res) {
     res.end();
 }
 
+function checkEmptyQuery(query, res) {
+    if (query === '') {
+        reply(res, 400, 'Query cannot be empty.');
+        return true;
+    }
+    return false;
+}
+
 function reply(res, status, message) {
     res.writeHead(status, {
         'Content-Type': 'application/json',
@@ -33,7 +41,7 @@ function handleGet(req, res) {
 
     if (pathname === '/query') {
         const sqlQuery = parsedUrl.query.sql;
-        if (sqlQuery) {
+        if (!checkEmptyQuery(sqlQuery, res)) {
             console.log('Received query:', sqlQuery);
             sqlHandler.sendSQLQuery(sqlQuery)
                 .then(result => {
@@ -44,8 +52,6 @@ function handleGet(req, res) {
                         reply(res, 400, error_messages[result.error.routine] || "Error executing query.");
                     }
                 });
-        } else {
-            reply(res, 400, '400 Bad Request');
         }
     } else {
         reply(res, 404, '404 Not Found');
@@ -76,16 +82,18 @@ function handlePost(req, res) {
                 });
         } else if (pathname === '/query') {
             const query = JSON.parse(body).query;
-            console.log('Received query:', query);
-            sqlHandler.sendSQLQuery(query)
-                .then(result => {
-                    if (result.data) {
-                        reply(res, 201, "Successfully inserted data.");
-                    } else {
-                        console.log('Error:', error);
-                        reply(res, 400, error_messages[result.error.routine] || "Error inserting data.");
-                    }
-                });
+            if (!checkEmptyQuery(query, res)) {
+                console.log('Received query:', query);
+                sqlHandler.sendSQLQuery(query)
+                    .then(result => {
+                        if (result.data) {
+                            reply(res, 201, "Successfully inserted data.");
+                        } else {
+                            console.log('Error:', error);
+                            reply(res, 400, error_messages[result.error.routine] || "Error inserting data.");
+                        }
+                    });
+            }   
         } else {
             reply(res, 404, '404 Not Found');
         }
