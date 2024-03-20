@@ -23,6 +23,12 @@ class SQLHandler {
                     dateOfBirth DATE NOT NULL
                 );
             `);
+            await client.query(`
+                GRANT SELECT, INSERT ON patients to client;
+            `);
+            await client.query(`
+                GRANT USAGE on SEQUENCE patients_id_seq to client;
+            `);
             console.log(' Table created successfully (or already exists)');
         } catch (error) {
             console.error('Error creating table:', error);
