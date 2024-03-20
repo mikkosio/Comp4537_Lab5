@@ -101,7 +101,7 @@ function handlePost(req, res) {
 }
 
 async function handleRequest(req, res) {
-    sqlHandler.createTable();
+    await sqlHandler.createTable();
     if (req.method === "OPTIONS") {
         handleOptions(req, res);
     } else if (req.method === "GET") {
