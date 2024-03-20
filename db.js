@@ -6,10 +6,10 @@ class SQLHandler {
         this.pool = new Pool({
             connectionString: connectionString
         });
-        this.#createTable();
+        this.createTable();
     }
 
-    async #createTable() {
+    async createTable() {
         let client;
         try {
             let pool = new Pool({
@@ -24,10 +24,10 @@ class SQLHandler {
                 );
             `);
             await client.query(`
-                GRANT SELECT, INSERT ON patients to client;
+                GRANT SELECT, INSERT ON patients to client
             `);
             await client.query(`
-                GRANT USAGE on SEQUENCE patients_id_seq to client;
+                GRANT USAGE on SEQUENCE patients_id_seq to client
             `);
             console.log(' Table created successfully (or already exists)');
         } catch (error) {
