@@ -25,7 +25,8 @@ function checkEmptyQuery(query, res) {
 
 function reply(res, status, message) {
     res.writeHead(status, {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*'
     });
     const reply = {
         status: status,
