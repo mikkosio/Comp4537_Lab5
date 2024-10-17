@@ -7,11 +7,12 @@ const sqlHandler = new SQLHandler(process.env.POSTGRES_URL_CLIENT);
 
 // Written with help from ChatGPT 3.5 to debug CORS issues
 function handleOptions(req, res) {
-    res.writeHead(200, {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods': 'GET, POST',
-        'Access-Control-Allow-Headers': 'Content-Type'
-    });
+    // res.writeHead(200, {
+    //     'Access-Control-Allow-Origin': '*',
+    //     'Access-Control-Allow-Methods': 'GET, POST',
+    //     'Access-Control-Allow-Headers': 'Content-Type'
+    // });
+    res.writeHead(204);
     res.end();
 }
 
@@ -101,6 +102,9 @@ function handlePost(req, res) {
 }
 
 async function handleRequest(req, res) {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
     await sqlHandler.createTable();
     if (req.method === "OPTIONS") {
         handleOptions(req, res);
